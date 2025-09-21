@@ -126,3 +126,32 @@ Flags:
       --sort                      Sort by one of: cpu.util, cpu.request, cpu.limit, mem.util, mem.request, mem.limit, name
 ```
 Ref - https://github.com/robscott/kube-capacity
+
+### 4. node-shell - Exec into node
+Installation
+```commandline
+kubectl krew install node-shell
+```
+Usage
+```commandline
+# Get standard bash shell
+kubectl node-shell <node>
+
+# Use custom image for pod
+kubectl node-shell <node> --image <image>
+
+# Use X-mode (mount /host, and do not enter host namespace)
+kubectl node-shell -x <node>
+
+# Skip specific namespace types to enter, choose any of ipc, mount, pid, net, uts
+kubectl node-shell <node> --no-ipc
+
+# Execute custom command
+kubectl node-shell <node> -- echo 123
+
+# Use stdin
+cat /etc/passwd | kubectl node-shell <node> -- sh -c 'cat > /tmp/passwd'
+
+# Run oneliner script
+kubectl node-shell <node> -- sh -c 'cat /tmp/passwd; rm -f /tmp/passwd'
+```
