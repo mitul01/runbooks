@@ -37,3 +37,9 @@ TopologySpreadConstraints: {.spec.topologySpreadConstraints}{"\n"}'
 kubectl get nodes -o custom-columns="NAME:.metadata.name,TAINTS:.spec.taints,CAPACITY_CPU:.status.capacity.cpu,CAPACITY_MEM:.status.capacity.memory,ALLOCATABLE_CPU:.status.allocatable.cpu,ALLOCATABLE_MEM:.status.allocatable.memory"
 ```
 
+### 4 Use Case: Find top pods consuming cpu & memory on a node
+```bash
+# Get pods with their node and resource requests/limits
+kubectl get pods -A -o custom-columns="NAME:.metadata.name,NAMESPACE:.metadata.namespace,NODE:.spec.nodeName,CPU_REQ:.spec.containers[0].resources.requests.cpu,MEM_REQ:.spec.containers[0].resources.requests.memory" | grep <node-name>
+```
+
