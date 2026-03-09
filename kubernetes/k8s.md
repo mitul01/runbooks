@@ -43,3 +43,8 @@ kubectl get nodes -o custom-columns="NAME:.metadata.name,TAINTS:.spec.taints,CAP
 kubectl get pods -A -o custom-columns="NAME:.metadata.name,NAMESPACE:.metadata.namespace,NODE:.spec.nodeName,CPU_REQ:.spec.containers[0].resources.requests.cpu,MEM_REQ:.spec.containers[0].resources.requests.memory" | grep <node-name>
 ```
 
+### 5. Find all the resources in a namespace
+```
+kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n <namespace>
+```
+
